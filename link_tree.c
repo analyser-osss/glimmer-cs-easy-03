@@ -56,6 +56,32 @@ void postorder(TreeNode*root)//后序遍历
     printf("%d",root->data);
 }
 
+int depth(TreeNode* root,int current_depth,int max_depth)
+{
+    if(root==NULL)
+    {
+        if(current_depth>max_depth)
+        {
+            return current_depth;
+        }
+        else
+        {
+            return max_depth;
+        }
+    }
+    int left_max=depth(root->left,current_depth+1,max_depth);
+    int right_max=depth(root->right,current_depth+1,max_depth);
+    if(left_max>right_max)
+    {
+        return left_max;
+    }
+    else{
+        return right_max;
+    }
+
+
+}
+
 int main()
 {
     TreeNode*root=create_node(1);
@@ -69,9 +95,13 @@ int main()
     root->right->left=create_node(6);
     root->right->right=create_node(7);
 
-    printf("前序：");preorder(root);printf("\n");
-    printf("中序：");inorder(root);printf("\n");
-    printf("后序：");postorder(root);printf("\n");
+
+    // printf("前序：");preorder(root);printf("\n");
+    // printf("中序：");inorder(root);printf("\n");
+    // printf("后序：");postorder(root);printf("\n");
+
+    int tree_depth=depth(root,0,0);
+    printf("树的深度是:%d\n",tree_depth);
 
     return 0;
 
